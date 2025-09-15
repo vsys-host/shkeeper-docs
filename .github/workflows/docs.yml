@@ -1,0 +1,38 @@
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'docs/**', 'static/**', 'docusaurus.config.js', 'sidebars.js' ]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [docs_source_changed, release_published]  # ← слушаем внешние события
+  
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Install deps
+        run: npm ci || npm i
+
+      - name: Fetch OpenAPI
+        env:
+          OPENAPI_URL: ${{ secrets.OPENAPI_URL }}
+        run: |
+          mkdir -p static/openapi
+          if [ -n "$OPENAPI_URL" ]; then
+            curl -fsSL "$OPENAPI_URL" -o static/openapi/openapi.json
+          fi
+
+      - name: Build
+        run: npx docusaurus build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build
+          publish_branch: gh-pages
