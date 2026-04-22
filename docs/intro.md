@@ -28,10 +28,9 @@ SHKeeper is designed to be **self-hosted, secure, and flexible**, giving you ful
 ---
 
 ## How it works
-1. You deploy SHKeeper on your server or use cloud hosting.  
-2. Connect your wallets (xpub/view-only).  
-3. Generate payment requests or invoices via API or dashboard.  
-4. Receive crypto payments directly to your wallets.  
+1. You deploy SHKeeper on your server or use cloud hosting.
+2. Generate payment requests or invoices via API or dashboard.
+3. Receive crypto payments directly to your wallets.
 
 ---
 
