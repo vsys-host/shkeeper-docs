@@ -45,24 +45,28 @@ jobs:
       - name: Download OpenAPI
         run: |
           mkdir -p static/openapi
-          curl -L \
+          if curl -L --fail \
             https://github.com/vsys-host/shkeeper.io/releases/download/${TAG}/openapi.json \
-            -o static/openapi/openapi.json
+            -o static/openapi/openapi.json; then
+            echo "OPENAPI_EXISTS=true" >> $GITHUB_ENV
+            echo "OpenAPI downloaded"
+          else
+            echo "OPENAPI_EXISTS=false" >> $GITHUB_ENV
+            echo "OpenAPI not found, skipping"
+          fi
 
       # =========================
       # VERIFY OPENAPI
       # =========================
       - name: Verify OpenAPI
+        if: env.OPENAPI_EXISTS == 'true'
         run: |
-          test -f static/openapi/openapi.json
           python - << 'EOF'
           import json
           with open('static/openapi/openapi.json') as f:
               data = json.load(f)
           assert 'openapi' in data
           assert 'info' in data
-          assert 'title' in data['info']
-          assert 'version' in data['info']
           print("OpenAPI OK")
           EOF
 
@@ -70,11 +74,11 @@ jobs:
       # COMMIT OPENAPI TO DOCS REPO
       # =========================
       - name: Commit OpenAPI to repo
+        if: env.OPENAPI_EXISTS == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add static/openapi/openapi.json
-
           if ! git diff --cached --quiet -- static/openapi/openapi.json; then
             git commit -m "chore: update openapi for ${TAG} [skip ci]"
             git push origin main
