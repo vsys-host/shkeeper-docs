@@ -1,10 +1,7 @@
 ---
 sidebar_position: 2
-title: Configuration
----
-
----
 title: SHKeeper Helm Configuration
+sidebar_label: Configuration
 ---
 
 # SHKeeper Helm Configuration
@@ -27,20 +24,28 @@ Before you start, make sure you have:
 
 Add the official repository and update it:
 
-helm repo add vsys-host https://vsys-host.github.io/helm-charts  
+```bash
+helm repo add vsys-host https://vsys-host.github.io/helm-charts
 helm repo update
+```
 
 Search for SHKeeper charts:
 
+```bash
 helm search repo vsys-host
+```
 
 Install SHKeeper:
 
+```bash
 helm install my-shkeeper vsys-host/shkeeper
+```
 
 To uninstall:
 
+```bash
 helm delete my-shkeeper
+```
 
 > ℹ️ `my-shkeeper` is the release name. You can change it to any name you prefer.
 
@@ -50,42 +55,44 @@ helm delete my-shkeeper
 
 Create a `values.yaml` file with your configuration:
 
-    replicaCount: 1
-    image:
-        repository: vsys-host/shkeeper
-        tag: latest
-        pullPolicy: IfNotPresent
-    service:
-        type: LoadBalancer
-        port: 5000
-    btc:
-        enabled: true
-    eth:
-        enabled: true
-    ltc:
-        enabled: true
-    doge:
-        enabled: false
-    enable_payout_callback: true
-    payout_callback:
-        url: "https://yourapp.com/webhook"
-        secret: "YOUR_SECRET"
-    persistence:
-        enabled: true
-        storageClass: "standard"
-        size: 10Gi
-    resources:
-        limits:
-            cpu: 500m
-            memory: 512Mi
-        requests:
-            cpu: 250m
-            memory: 256Mi
-    polling_interval: 30
-    confirmations:
-        bitcoin: 6
-        ethereum: 12
-        tron: 20
+```yaml
+replicaCount: 1
+image:
+  repository: vsys-host/shkeeper
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: LoadBalancer
+  port: 5000
+btc:
+  enabled: true
+eth:
+  enabled: true
+ltc:
+  enabled: true
+doge:
+  enabled: false
+enable_payout_callback: true
+payout_callback:
+  url: "https://yourapp.com/webhook"
+  secret: "YOUR_SECRET"
+persistence:
+  enabled: true
+  storageClass: "standard"
+  size: 10Gi
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+polling_interval: 30
+confirmations:
+  bitcoin: 6
+  ethereum: 12
+  tron: 20
+```
 
 > ℹ️ Customize fields as needed: enable/disable coins, webhook, resources, etc.
 
@@ -95,11 +102,15 @@ Create a `values.yaml` file with your configuration:
 
 Install SHKeeper using your custom configuration:
 
+```bash
 helm install my-shkeeper vsys-host/shkeeper -f values.yaml
+```
 
 Upgrade later:
 
+```bash
 helm upgrade my-shkeeper vsys-host/shkeeper -f values.yaml
+```
 
 ---
 
@@ -107,11 +118,13 @@ helm upgrade my-shkeeper vsys-host/shkeeper -f values.yaml
 
 Get the external IP of the service:
 
+```bash
 kubectl get svc
+```
 
 Open in your browser:
 
-http://EXTERNAL-IP:5000/
+`http://EXTERNAL-IP:5000/`
 
 > ℹ️ Replace `EXTERNAL-IP` with the actual service IP. Do not use angle brackets `< >` in Markdown.
 

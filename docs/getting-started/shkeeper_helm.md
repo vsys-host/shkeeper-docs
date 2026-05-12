@@ -5,25 +5,19 @@ title: SHKeeper Helm
 
 # What is SHKeeper Helm
 
-SHKeeper Helm is a convenient deployment package designed to simplify the installation of SHKeeper and its required cryptocurrency daemons on a Kubernetes cluster. Using Helm, you can quickly deploy SHKeeper and its dependencies with minimal manual setup. :contentReference{index=1}
-
+SHKeeper Helm is a convenient deployment package designed to simplify the installation of SHKeeper and its required cryptocurrency daemons on a Kubernetes cluster. Using Helm, you can quickly deploy SHKeeper and its dependencies with minimal manual setup.
 ---
 
 ## 🚀 Overview
 
-SHKeeper Helm is a **Helm chart** that automates the deployment of SHKeeper and its supported blockchain daemons (such as Bitcoin, Litecoin, and Dogecoin) for you. When installed using Helm, the chart sets up all necessary components in a Kubernetes environment so that SHKeeper is ready to run. :contentReference{index=2}
-
+SHKeeper Helm is a **Helm chart** that automates the deployment of SHKeeper and its supported blockchain daemons (such as Bitcoin, Litecoin, and Dogecoin) for you. When installed using Helm, the chart sets up all necessary components in a Kubernetes environment so that SHKeeper is ready to run.
 ---
 
 ## 📦 What the Helm Chart Installs
 
-After deploying the SHKeeper Helm chart, your Kubernetes cluster will automatically deploy the following components:
+After deploying the SHKeeper Helm chart, your cluster runs the **SHKeeper application** and, depending on your `values.yaml`, **cryptocurrency daemons** for the coins you enable (for example Bitcoin, Litecoin, Ethereum). Each component runs as its own workload (Deployment, StatefulSet, and so on).
 
-- **SHKeeper application**
-- **Bitcoin daemon**
-
-Each component runs as a separate workload within the cluster. :contentReference{index=3}
-
+For a detailed deployment reference, see the [Helm chart](../deployment/helm-chart) page.
 ---
 
 ## ⚙️ Prerequisites
@@ -34,15 +28,19 @@ Before deploying SHKeeper using Helm, make sure you have:
 - `kubectl` installed and configured to access the cluster
 - `helm` installed on your local system or CI environment
 
-These tools allow Helm to communicate with your cluster and deploy the chart. :contentReference{index=4}
-
+These tools allow Helm to communicate with your cluster and deploy the chart.
 ---
 
-## 🛠 Installation Steps
+## 🛠 Installation
 
-> The following steps assume you have cloned the Helm repository and are connected to your Kubernetes cluster.
+Use the chart published in the VSYS Host Helm repository (no separate Git clone is required):
 
-1. **Clone the Helm repository:**
+```bash
+helm repo add vsys-host https://vsys-host.github.io/helm-charts
+helm repo update
+helm install my-shkeeper vsys-host/shkeeper
+```
 
-   ```bash
-   git clone https://github.com/vsys-host/shkeeper-helm-docker.git
+Optional: create a `values.yaml` and install with `helm install my-shkeeper vsys-host/shkeeper -f values.yaml`.
+
+For a full walkthrough (k3s on a VPS, Secret Generator, custom values), see [Installation](./installation) and [Configuration](./configuration).
