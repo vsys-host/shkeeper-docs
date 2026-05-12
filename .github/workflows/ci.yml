@@ -4,36 +4,122 @@ on:
   push:
     tags:
       - "v*.*.*"
+
+  repository_dispatch:
+    types: [build-docs]
+
+permissions:
+  contents: write
+
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v3
-      -
-        name: Docker meta
+      # =========================
+      # CHECKOUT DOCS REPO
+      # =========================
+      - name: Checkout docs repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # =========================
+      # DETERMINE TAG
+      # =========================
+      - name: Resolve tag
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            if [ -z "${{ github.event.client_payload.tag }}" ]; then
+              echo "Error: repository_dispatch requires client_payload.tag" >&2
+              exit 1
+            fi
+            echo "TAG=${{ github.event.client_payload.tag }}" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
+      # =========================
+      # DOWNLOAD OPENAPI FROM RELEASE
+      # =========================
+      - name: Download OpenAPI
+        run: |
+          mkdir -p static/openapi
+          curl -L \
+            https://github.com/vsys-host/shkeeper.io/releases/download/${TAG}/openapi.json \
+            -o static/openapi/openapi.json
+
+      # =========================
+      # VERIFY OPENAPI
+      # =========================
+      - name: Verify OpenAPI
+        run: |
+          test -f static/openapi/openapi.json
+          python - << 'EOF'
+          import json
+          with open('static/openapi/openapi.json') as f:
+              data = json.load(f)
+          assert 'openapi' in data
+          assert 'info' in data
+          assert 'title' in data['info']
+          assert 'version' in data['info']
+          print("OpenAPI OK")
+          EOF
+
+      # =========================
+      # COMMIT OPENAPI TO DOCS REPO
+      # =========================
+      - name: Commit OpenAPI to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add static/openapi/openapi.json
+
+          if ! git diff --cached --quiet -- static/openapi/openapi.json; then
+            git commit -m "chore: update openapi for ${TAG} [skip ci]"
+            git push origin main
+          else
+            echo "no changes"
+          fi
+
+      # =========================
+      # SYNC LATEST MAIN
+      # =========================
+      - name: Sync main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+
+      # =========================
+      # DOCKER META
+      # =========================
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
-          # don't set latest tag
+          images: vsyshost/shkeeper-docs
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.TAG }}
           flavor: |
             latest=false
-          # list of Docker images to use as base name for tags
-          images: |
-            vsyshost/shkeeper-docs
-          # generate Docker tags based on the following events/attributes
-          tags: |
-            type=semver,pattern={{version}}
-      -
-        name: Login to Docker Hub
+
+      # =========================
+      # LOGIN
+      # =========================
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+
+      # =========================
+      # BUILD & PUSH
+      # =========================
+      - name: Build & push
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
+          no-cache: true
+          pull: true
           tags: ${{ steps.meta.outputs.tags }}
