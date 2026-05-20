@@ -113,22 +113,26 @@ helm install kubernetes-secret-generator mittwald/kubernetes-secret-generator
 
 Create a `values.yaml` file with your custom settings before installing SHKeeper.
 
-Example:
+Example (matches the chart in [vsys-host/helm-charts](https://github.com/vsys-host/helm-charts)):
 
 ```yaml
-image:
-  repository: shkeeper/shkeeper
-  tag: latest
+namespace: shkeeper
+domain: pay.example.com   # optional; leave "" to use LoadBalancer IP only
 
-env:
-  SECRET_KEY: "your-secret-key"
-  DATABASE_URL: "postgresql://shkeeper:password@postgres:5432/shkeeper"
+shkeeper:
+  image: vsyshost/shkeeper:2.5.15
+  enable_payout_callback: false
 
-ingress:
+btc:
   enabled: true
+  mainnet: true
+
+btc_fullnode:
+  enabled: false
+  url: http://shkeeper:shkeeper@fullnode.bitcoin.shkeeper.io:8332
 ```
 
-Adjust fields for your environment; see [Configuration](./configuration) and the chart’s `values.yaml` for all options.
+Adjust fields for your environment; see [Configuration](./configuration) and the chart’s [`values.yaml`](https://github.com/vsys-host/helm-charts/blob/main/charts/shkeeper/values.yaml) for all options.
 
 ---
 
@@ -150,9 +154,14 @@ kubectl get pods -A | grep -i shkeeper
 
 ### 10) Access the Web UI
 
-Once deployed, open:
+Once deployed, get the external address:
 
-`http://YOUR_SERVER_IP:5000/`
+```bash
+kubectl get svc -n shkeeper shkeeper-external
+```
+
+- If `domain` is set in `values.yaml`: open `https://your-domain/`
+- Otherwise: open `http://LOAD_BALANCER_IP:5000/` (port is `shkeeper.port`, default 5000)
 
 Complete [account registration](./account_registration) and set your admin password when prompted.
 
