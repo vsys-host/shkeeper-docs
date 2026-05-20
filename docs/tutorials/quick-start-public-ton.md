@@ -18,7 +18,7 @@ ton_fullnode:
   tolerations: []
 
 ton_shkeeper:
-  image: vsyshost/ton-shkeeper:0.0.2
+  image: vsyshost/ton-shkeeper:0.0.3
 
 # Native TON
 ton:

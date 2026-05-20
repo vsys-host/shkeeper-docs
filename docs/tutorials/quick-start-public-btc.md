@@ -4,10 +4,11 @@ title: Quick Start Public Bitcoin
 ---
 
 ```yaml
+unifiend_btc_image: vsyshost/bitcoin-shkeeper:2.0.13
+
 btc:
   enabled: true
   mainnet: true
-  image: vsyshost/bitcoin-shkeeper:1.0.7
   legacy:
     enabled: false
 

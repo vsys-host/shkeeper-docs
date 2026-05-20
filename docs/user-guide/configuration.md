@@ -5,97 +5,95 @@ title: SHKeeper Helm Configuration
 
 # SHKeeper Helm Configuration
 
-This document explains how to configure and deploy **SHKeeper** using the official Helm chart.  
-SHKeeper is a self-hosted, watch-only cryptocurrency processor.
+This page is a short reference for the official SHKeeper Helm chart. For the full guide (prerequisites, examples, access, SSL), see [Getting started — Configuration](../getting-started/configuration).
+
+The chart source of truth is [`charts/shkeeper/values.yaml`](https://github.com/vsys-host/helm-charts/blob/main/charts/shkeeper/values.yaml) in the vsys-host/helm-charts repository.
 
 ---
 
-## 🧰 Prerequisites
-
-Before you start, make sure you have:
-
-- A Kubernetes cluster (e.g., k3s, GKE, AKS, EKS)  
-- Helm CLI installed  
-- (Optional) `kubectl` configured to access your cluster  
-
-> ℹ️ These are the minimum requirements to deploy SHKeeper using Helm charts.
-
----
-
-## 📦 Add Helm Repository and Install SHKeeper
-
-### Add the official repository and update it
+## Install
 
 ```bash
 helm repo add vsys-host https://vsys-host.github.io/helm-charts
 helm repo update
-Search for SHKeeper charts
-helm search repo vsys-host
-Install SHKeeper
-helm install my-shkeeper vsys-host/shkeeper
-Uninstall SHKeeper
-helm delete my-shkeeper
+helm install my-shkeeper vsys-host/shkeeper -f values.yaml
+```
 
-ℹ️ my-shkeeper is the release name. You can change it to any name you prefer.
+---
 
-⚙️ Configure values.yaml
+## Main value groups
 
-Create a values.yaml file with your configuration:
+**Cluster / access**
 
-replicaCount: 1
-image:
-  repository: vsys-host/shkeeper
-  tag: latest
-  pullPolicy: IfNotPresent
-service:
-  type: LoadBalancer
+- `namespace` — default `shkeeper`
+- `domain` — if non-empty, enables HTTPS Ingress (Traefik)
+- `storageClassName` — PVC storage class
+- `external_ip` — for Bitcoin Lightning
+
+**SHKeeper app**
+
+```yaml
+shkeeper:
+  image: vsyshost/shkeeper:2.5.15
   port: 5000
+  enable_payout_callback: false
+```
+
+**Coins** — enable wallets with top-level flags, for example:
+
+```yaml
 btc:
   enabled: true
+  mainnet: true
 eth:
   enabled: true
-ltc:
+trx:
   enabled: true
-doge:
+usdt:
+  enabled: true
+```
+
+**Full nodes** — use public RPC or run your own:
+
+```yaml
+btc_fullnode:
   enabled: false
-enable_payout_callback: true
-payout_callback:
-  url: "https://yourapp.com/webhook"
-  secret: "YOUR_SECRET"
-persistence:
-  enabled: true
-  storageClass: "standard"
-  size: 10Gi
-resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 250m
-    memory: 256Mi
-polling_interval: 30
-confirmations:
-  bitcoin: 6
-  ethereum: 12
-  tron: 20
+  url: http://shkeeper:shkeeper@fullnode.bitcoin.shkeeper.io:8332
+eth_fullnode:
+  enabled: false
+  url: https://fullnode.ethereum.shkeeper.io:8645
+  mainnet: true
 ```
 
-ℹ️ Customize fields as needed: enable/disable coins, webhook, resources, etc.
+**Images** — chain-specific images are top-level keys, for example `unifiend_btc_image`, `ethereum_shkeeper.image`, `tron_shkeeper.image`, not `image.repository` under a generic `image` block.
 
-🚀 Deploy with Custom values.yaml
-helm install my-shkeeper vsys-host/shkeeper -f values.yaml
+---
 
-Upgrade later:
+## Not supported in Helm values
+
+These appear in older docs but are **not** in the chart:
+
+- `replicaCount`, `image.repository`, `image.tag`, `pullPolicy`
+- `service.type`, `service.port` (use `shkeeper.port`; LoadBalancer service is fixed)
+- `persistence.enabled` / `size` (PVCs are created per component by templates)
+- `resources.limits` / `requests`
+- `polling_interval`, `confirmations`
+- `payout_callback.url`, `payout_callback.secret` (configure in SHKeeper after deploy)
+
+---
+
+## Access
+
+```bash
+kubectl get svc -n shkeeper shkeeper-external
 ```
-helm upgrade my-shkeeper vsys-host/shkeeper -f values.yaml
-```
-🌐 Access SHKeeper
 
-Get the external IP of the service:
+Browser: `http://LOAD_BALANCER_IP:5000/` or `https://your-domain/` when `domain` is set.
 
-kubectl get svc
+---
 
-Open in your browser:
-```
-http://EXTERNAL-IP:5000/
-```
+## Related
+
+- [Installation](../getting-started/installation)
+- [SHKeeper Helm overview](../getting-started/shkeeper_helm)
+- [Auto SSL](../getting-started/auto-ssl)

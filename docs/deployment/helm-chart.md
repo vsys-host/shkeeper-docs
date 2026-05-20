@@ -19,4 +19,6 @@ A Helm chart is a package that defines, installs, and manages Kubernetes applica
 - **Templates:** Kubernetes manifests that are parameterized with values from the chart.  
 - **Dependencies:** Other charts or services required for your application to function.
 
+For SHKeeper, values are defined in [`charts/shkeeper/values.yaml`](https://github.com/vsys-host/helm-charts/blob/main/charts/shkeeper/values.yaml) (keys such as `shkeeper.image`, `btc.enabled`, `eth_fullnode.url`, `domain`). See [Configuration](../getting-started/configuration) for a field-by-field guide.
+
 ---
