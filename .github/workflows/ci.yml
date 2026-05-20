@@ -45,16 +45,23 @@ jobs:
       - name: Download OpenAPI
         run: |
           mkdir -p static/openapi
-          if curl -L --fail \
-            https://github.com/vsys-host/shkeeper.io/releases/download/${TAG}/openapi.json \
-            -o static/openapi/openapi.json; then
+
+          URL="https://github.com/vsys-host/shkeeper.io/releases/download/${TAG}/openapi.json"
+
+          HTTP_CODE=$(curl -L \
+            -H "Accept: application/octet-stream" \
+            -w "%{http_code}" \
+            -o static/openapi/openapi.json \
+            -s "$URL")
+
+          if [ "$HTTP_CODE" = "200" ]; then
             echo "OPENAPI_EXISTS=true" >> $GITHUB_ENV
             echo "OpenAPI downloaded"
           else
+            rm -f static/openapi/openapi.json
             echo "OPENAPI_EXISTS=false" >> $GITHUB_ENV
-            echo "OpenAPI not found, skipping"
+            echo "OpenAPI not found"
           fi
-
       # =========================
       # VERIFY OPENAPI
       # =========================
