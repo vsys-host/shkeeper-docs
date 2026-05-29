@@ -4,14 +4,14 @@ title: SHKeeper Documentation
 sidebar_label: Introduction
 ---
 
-Welcome to **SHKeeper** — an open-source cryptocurrency payment processor.  
-It allows merchants and developers to **accept crypto payments directly** into their own wallets, without intermediaries.  
-SHKeeper is designed to be **self-hosted, secure, and flexible**, giving you full control over your funds.
+Welcome to **SHKeeper** — an open-source, **self-hosted, non-custodial** cryptocurrency payment processor.  
+It allows merchants and developers to **accept crypto payments directly** into wallets on their own deployment, without a third-party custodian.  
+SHKeeper runs in **watch-only mode** for payment processing: it monitors the blockchain for deposits while wallet keys remain encrypted on your instance.
 
 ---
 
 ## Key Features
-- 🔑 **Non-custodial** — private keys stay under your control.
+- 🔑 **Watch-only & Non-custodial** — monitors incoming payments on your deployment; wallet keys are encrypted with your password and never stored in plain text. See [Overview — Watch-only mode](/docs/basics/overview#watch-only-mode--private-keys).
 - 💰 **Multi-currency** — Bitcoin, Litecoin, Dogecoin, Ethereum, Tron, Binance Smart Chain, Polygon, Avalanche, XRP and more.
 - 🛠️ **Easy integration** — REST API, WHMCS module, Telegram Bot support.
 - 📊 **Dashboard** — manage merchants, wallets, and transactions.

@@ -12,7 +12,11 @@ module.exports = {
   organizationName: 'vsys-host',
   projectName: 'shkeeper-docs',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   i18n: { defaultLocale: 'en', locales: ['en'] },
 
   presets: [

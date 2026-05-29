@@ -19,7 +19,7 @@ SHKeeper is a powerful self‑hosted cryptocurrency payment processor with a ran
 8. **No Third‑Party Involvement** – No external processors mean greater privacy and censorship resistance.  
 9. **Increased Privacy & Security** – Full control over keys and reduced reliance on external services.  
 10. **No KYC Required** – No need for identity verification procedures.  
-11. **Non‑Custodial** – You retain complete ownership of your private keys and funds.  
+11. **Non‑Custodial (watch-only processing)** – Payments are monitored on your self-hosted instance; wallet keys are encrypted with your password and are not stored in plain text. You retain ownership of funds and the encryption password.  
 12. **Independent, Open Source Software** – Fully open‑source and community‑driven software.  
 13. **SegWit Support** – Enhanced transaction flexibility and efficiency.  
 14. **Easily Embeddable Payment Buttons** – Simple integration of payment buttons into any web resource.  

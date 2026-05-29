@@ -13,7 +13,11 @@ No, SHKeeper does not convert crypto to fiat. You receive payments directly in c
 For Ethereum and EVM chains, SHKeeper works with standard token transfers. Custom smart contracts are not directly supported.
 
 ## Lite wallets supported?
-No, you can't connect lightweight wallets (xpub, view-only wallets) for watch-only mode without storing private keys on the server.
+No. SHKeeper does **not** support importing external **Bitcoin-style watch-only** wallets (xpub or view-key only).
+
+SHKeeper creates wallets inside **your** instance at registration. Private key material is **encrypted** in the database with your registration password and is **not stored in plain text**. That is separate from “lite” node setups (remote RPC instead of a local full node)—see [Lite wallets](/docs/security/lite-wallets-supported) for remote-node configuration.
+
+For how **watch-only mode** applies to payment processing, see [Overview — Watch-only mode & private keys](/docs/basics/overview#watch-only-mode--private-keys).
 
 ## What is cloud service pricing?
 The open-source version is free. Cloud service pricing depends on subscription level (contact sales for details).

@@ -5,7 +5,9 @@ title: Lite Wallets Supported
 
 # Lite Wallets Supported
 
-Shkeeper supports **Lite Wallets**, providing a lightweight and user-friendly option for managing cryptocurrency funds without requiring full blockchain nodes. Lite wallets are ideal for users who want to interact with multiple cryptocurrencies securely and efficiently, without the overhead of running full nodes.
+> **Note:** “Lite wallets” here means using **remote blockchain nodes** (no local full node)—**not** importing external Bitcoin watch-only wallets (xpub / view-key). External xpub-only wallets are **not** supported; see [FAQ — Lite wallets supported?](/docs/faqs#lite-wallets-supported).
+
+Shkeeper supports **lite wallet** operation, providing a lightweight option for managing cryptocurrency funds without requiring full blockchain nodes on your server. This is ideal when you want to interact with multiple cryptocurrencies efficiently, without the overhead of running full nodes locally.
 
 ---
 
