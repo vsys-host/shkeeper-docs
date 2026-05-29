@@ -6,9 +6,24 @@ sidebar_position: 1
 
 # SHKeeper Overview
 
-**SHKeeper** is a self-hosted, **watch-only cryptocurrency payment processor** that allows merchants and applications to accept crypto payments directly into their wallets, without storing private keys.  
+**SHKeeper** is a self-hosted, **non-custodial cryptocurrency payment processor** that allows merchants and applications to accept crypto payments directly into wallets on **your** deployment.
 
 It tracks transactions for supported cryptocurrencies, generates invoices with unique deposit addresses, and provides payment callbacks to merchant systems. SHKeeper can connect to **full blockchain nodes** or use external nodes for transaction verification.
+
+---
+
+## Watch-only mode & private keys
+
+**Watch-only mode** means SHKeeper **monitors** the blockchain to detect and confirm incoming payments. It does not hold customer funds as a third-party custodian—payments are credited to wallets you operate on your instance.
+
+| Term | Meaning in SHKeeper |
+|------|---------------------|
+| **Watch-only (processor)** | Observes the chain and verifies deposits; no external custodian |
+| **Non-custodial** | Self-hosted; you control infrastructure, encryption password, and funds |
+| **Private keys** | Created at registration, **encrypted** in your database (AES-256), **never stored in plain text** |
+| **Not supported** | Importing external Bitcoin-style watch-only wallets (xpub / view-key only) — see [FAQ](../faqs/index.md#lite-wallets-supported) |
+
+Helm charts and default install configs do **not** ship wallet private keys; you complete [wallet setup](../getting-started/wallet_setup) in the UI after deployment. For encryption details, see [Encrypt wallet data](../security/encrypt-wallet-dat).
 
 ---
 
@@ -30,13 +45,13 @@ SHKeeper currently supports the following cryptocurrencies:
 - **Tether (USDT)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche  
 - **USD Coin (USDC)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche
 
-> ℹ️ Only these coins are supported for deposits and monitoring. SHKeeper does **not store private keys**, so all wallets remain under your control (watch-only mode).
+> ℹ️ Only these coins are supported for deposits and monitoring. Wallet keys stay on **your** instance (encrypted); SHKeeper does not act as a third-party custodian.
 
 ---
 
 ## Key Features
 
-- 🔑 **Watch-only & Non-custodial** — private keys never leave your wallet; SHKeeper can only monitor balances and transactions.  
+- 🔑 **Watch-only & Non-custodial** — monitors incoming payments on your deployment; wallet keys are encrypted with your password and never stored in plain text.  
 - 💰 **Multi-currency support** — handle multiple supported coins in a single platform.  
 - 🛠️ **REST API** — create invoices, check balances, manage payouts, and handle webhook callbacks.  
 - 📊 **Dashboard** — manage merchants, wallets, and transaction history.  

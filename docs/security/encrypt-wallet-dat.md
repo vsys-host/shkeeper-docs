@@ -4,7 +4,9 @@ title: Encrypt Wallet Dat
 ---
 # Encrypt Wallet Data
 
-Shkeeper securely encrypts all wallet data stored in its database using a **user-provided key** at the time of registration. This key ensures that sensitive information, including private keys and wallet credentials, remains protected even if the database is compromised.
+SHKeeper is **non-custodial** and runs in **watch-only payment-processing mode** (it monitors the blockchain for deposits on your instance). Wallet private keys are **not stored in plain text**: they are encrypted in the database with a **user-provided password** at registration. This page describes that model; for terminology, see [Overview — Watch-only mode & private keys](../basics/overview#watch-only-mode--private-keys).
+
+Shkeeper securely encrypts all wallet data stored in its database using that registration password. This ensures sensitive information, including private keys and wallet credentials, remains protected even if the database files are compromised.
 
 ---
 

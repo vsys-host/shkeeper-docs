@@ -19,7 +19,7 @@ By accessing or using SHKeeper, you agree to be bound by these Terms of Service 
 
 - SHKeeper is a **self-hosted cryptocurrency payment processor**.  
 - You may use SHKeeper to process, receive, and track cryptocurrency payments.  
-- SHKeeper does **not store private keys**; you are responsible for securing your wallets.  
+- SHKeeper is **non-custodial** and self-hosted: wallet private keys are **encrypted** on your instance (not stored in plain text). You are responsible for your registration encryption password, backups, and wallet security. See [Encrypt wallet data](../security/encrypt-wallet-dat).  
 - You may not use SHKeeper for **illegal activities**, including but not limited to money laundering, fraud, or financing illicit activities.
 
 ---

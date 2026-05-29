@@ -22,4 +22,4 @@ title: Bare Metal
 - Use SSD or NVMe storage for blockchain data and fast I/O.  
 - Ensure reliable network connection and adequate bandwidth, especially for fullnodes.  
 
-> ℹ️ Bare metal deployment gives you **full control over performance, resources, and network security**, while maintaining the watch-only security model of SHKeeper.
+> ℹ️ Bare metal deployment gives you **full control over performance, resources, and network security**. SHKeeper still runs in **watch-only payment-processing mode** on your instance (monitors deposits; wallet keys encrypted, not plain text). See [Overview — Watch-only mode](../basics/overview#watch-only-mode--private-keys).
