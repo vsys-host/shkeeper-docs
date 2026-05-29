@@ -170,7 +170,7 @@ There is no `service.type` value in `values.yaml`; LoadBalancer is always create
 
 ## Important notes
 
-- SHKeeper is **watch-only**; private keys are not stored in the chart.
+- SHKeeper runs in **watch-only** payment-processing mode (monitors deposits on your instance). The Helm chart does **not** embed wallet private keys—configure wallets in the UI after install; keys are encrypted in the application database. See [Overview — Watch-only mode](../basics/overview#watch-only-mode--private-keys).
 - Enabling a coin deploys the corresponding *-shkeeper workload and, when `*_fullnode.enabled: true`, a full node with PVCs.
 - Use `storageClassName` if your cluster needs a non-default storage class for persistent volumes.
 - Multiple isolated instances: separate Helm releases and/or namespaces (see chart defaults: single replica, one PVC at `/shkeeper.io/instance`).
