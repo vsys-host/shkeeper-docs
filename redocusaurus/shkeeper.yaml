@@ -103,13 +103,13 @@ paths:
         - wallet
     parameters:
       - in: path
-        name: fiat
+        name: crypto_name
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: crypto_name
+        name: fiat
         required: true
         schema:
           type: string
@@ -300,7 +300,7 @@ paths:
           label: CLI
           source: |
             curl --location --request GET 'https://demo.shkeeper.io/metrics' \
-            --header 'Authorization: Basic c2hrZWVwZXI6c2hrZacvb3Q='
+            --header 'Authorization: Basic c2hrZWVwZXI6c2hrZWVwZXI='
   /unlock:
     get:
       responses:
@@ -526,6 +526,26 @@ paths:
         schema:
           type: string
           minLength: 1
+  /api/v1/settings/{key}:
+    get:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      tags:
+        - api_v1
+    parameters:
+      - in: path
+        name: key
+        required: true
+        schema:
+          type: string
+          minLength: 1
+    post:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      tags:
+        - api_v1
   /api/v1/{crypto_name}/transaction:
     post:
       responses:
@@ -562,6 +582,20 @@ paths:
         default:
           $ref: '#/components/responses/DEFAULT_ERROR'
       summary: Configure auto payout policy for a crypto wallet.
+      tags:
+        - api_v1
+    parameters:
+      - in: path
+        name: crypto_name
+        required: true
+        schema:
+          type: string
+          minLength: 1
+  /api/v1/{crypto_name}/fee-deposit-address:
+    get:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
       tags:
         - api_v1
     parameters:
@@ -789,7 +823,7 @@ paths:
           type: string
           minLength: 1
   /api/v1/walletnotify/{crypto_name}/{txid}:
-    get:
+    post:
       responses:
         '202':
           description: Callback accepted
@@ -1005,13 +1039,13 @@ paths:
             --header 'Authorization: Basic YOUR_BASE64_CREDENTIALS'
     parameters:
       - in: path
-        name: id
+        name: crypto_name
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: crypto_name
+        name: id
         required: true
         schema:
           type: string

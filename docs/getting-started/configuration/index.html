@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">SHKeeper Helm Configuration | SHKeeper Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.shkeeper.io/docs/getting-started/configuration"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="SHKeeper Helm Configuration | SHKeeper Docs"><meta data-rh="true" name="description" content="This document explains how to configure and deploy SHKeeper using the official Helm chart from vsys-host/helm-charts. The chart structure matches charts/shkeeper/values.yaml in that repository."><meta data-rh="true" property="og:description" content="This document explains how to configure and deploy SHKeeper using the official Helm chart from vsys-host/helm-charts. The chart structure matches charts/shkeeper/values.yaml in that repository."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.shkeeper.io/docs/getting-started/configuration"><link data-rh="true" rel="alternate" href="https://docs.shkeeper.io/docs/getting-started/configuration" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.shkeeper.io/docs/getting-started/configuration" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Getting Started","item":"https://docs.shkeeper.io/docs/category/getting-started"},{"@type":"ListItem","position":2,"name":"Configuration","item":"https://docs.shkeeper.io/docs/getting-started/configuration"}]}</script><link rel="stylesheet" href="/assets/css/styles.684f3471.css">
-<script src="/assets/js/runtime~main.fc8abfaa.js" defer="defer"></script>
-<script src="/assets/js/main.9b54558f.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.ce226521.js" defer="defer"></script>
+<script src="/assets/js/main.bc3d1362.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -71,7 +71,7 @@
 <hr>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="important-notes">Important notes<a href="#important-notes" class="hash-link" aria-label="Direct link to Important notes" title="Direct link to Important notes" translate="no">​</a></h2>
 <ul>
-<li class="">SHKeeper is <strong>watch-only</strong>; private keys are not stored in the chart.</li>
+<li class="">SHKeeper runs in <strong>watch-only</strong> payment-processing mode (monitors deposits on your instance). The Helm chart does <strong>not</strong> embed wallet private keys—configure wallets in the UI after install; keys are encrypted in the application database. See <a class="" href="/docs/basics/overview#watch-only-mode--private-keys">Overview — Watch-only mode</a>.</li>
 <li class="">Enabling a coin deploys the corresponding *-shkeeper workload and, when <code>*_fullnode.enabled: true</code>, a full node with PVCs.</li>
 <li class="">Use <code>storageClassName</code> if your cluster needs a non-default storage class for persistent volumes.</li>
 <li class="">Multiple isolated instances: separate Helm releases and/or namespaces (see chart defaults: single replica, one PVC at <code>/shkeeper.io/instance</code>).</li>
