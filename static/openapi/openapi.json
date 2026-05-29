@@ -148,7 +148,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "fiat",
+          "name": "crypto_name",
           "required": true,
           "schema": {
             "type": "string",
@@ -157,7 +157,7 @@
         },
         {
           "in": "path",
-          "name": "crypto_name",
+          "name": "fiat",
           "required": true,
           "schema": {
             "type": "string",
@@ -424,7 +424,7 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           },
           "200": {
-            "description": "Success \u2013 metrics retrieved",
+            "description": "Success – metrics retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -434,7 +434,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized \u2013 invalid credentials",
+            "description": "Unauthorized – invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -462,7 +462,7 @@
           {
             "lang": "cURL",
             "label": "CLI",
-            "source": "curl --location --request GET 'https://demo.shkeeper.io/metrics' \\\n--header 'Authorization: Basic c2hrZWVwZXI6c2hrZacvb3Q='\n"
+            "source": "curl --location --request GET 'https://demo.shkeeper.io/metrics' \\\n--header 'Authorization: Basic c2hrZWVwZXI6c2hrZWVwZXI='\n"
           }
         ]
       }
@@ -496,7 +496,7 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           },
           "200": {
-            "description": "Success \u2013 available cryptocurrencies retrieved",
+            "description": "Success – available cryptocurrencies retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -526,7 +526,7 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           },
           "200": {
-            "description": "Success \u2013 balances retrieved",
+            "description": "Success – balances retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -536,7 +536,7 @@
             }
           },
           "400": {
-            "description": "Error \u2013 invalid includes or no valid cryptos requested",
+            "description": "Error – invalid includes or no valid cryptos requested",
             "content": {
               "application/json": {
                 "schema": {
@@ -791,6 +791,39 @@
         }
       ]
     },
+    "/api/v1/settings/{key}": {
+      "get": {
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "api_v1"
+        ]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "key",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ],
+      "post": {
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "api_v1"
+        ]
+      }
+    },
     "/api/v1/{crypto_name}/transaction": {
       "post": {
         "responses": {
@@ -863,6 +896,29 @@
         }
       ]
     },
+    "/api/v1/{crypto_name}/fee-deposit-address": {
+      "get": {
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "api_v1"
+        ]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "crypto_name",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ]
+    },
     "/api/v1/{crypto_name}/status": {
       "get": {
         "responses": {
@@ -894,7 +950,7 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           },
           "200": {
-            "description": "Success \u2013 balance retrieved",
+            "description": "Success – balance retrieved",
             "content": {
               "application/json": {
                 "schema": {
@@ -904,7 +960,7 @@
             }
           },
           "400": {
-            "description": "Error \u2013 crypto not enabled or invalid",
+            "description": "Error – crypto not enabled or invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -1179,7 +1235,7 @@
       ]
     },
     "/api/v1/walletnotify/{crypto_name}/{txid}": {
-      "get": {
+      "post": {
         "responses": {
           "default": {
             "$ref": "#/components/responses/DEFAULT_ERROR"
@@ -1502,7 +1558,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "id",
+          "name": "crypto_name",
           "required": true,
           "schema": {
             "type": "string",
@@ -1511,7 +1567,7 @@
         },
         {
           "in": "path",
-          "name": "crypto_name",
+          "name": "id",
           "required": true,
           "schema": {
             "type": "string",
