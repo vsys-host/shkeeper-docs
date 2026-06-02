@@ -102,6 +102,13 @@ Each chain has `enabled` flags and optional `*_fullnode` / `*_shkeeper` sections
 - **Bitcoin Lightning:** `btc_lightning` (LND, RTL, LNbits)
 - **AML:** `aml`, `aml_shkeeper`
 
+For EVM-like chains, the deployment image is shared through `ethereum_like_shkeeper.image` (used by ETH, BNB, Polygon, Avalanche, Arbitrum, Optimism).
+
+```yaml
+ethereum_like_shkeeper:
+  image: vsyshost/ethereum_like_coin:1.0.1
+```
+
 See the full list in the chart’s [`values.yaml`](https://github.com/vsys-host/helm-charts/blob/main/charts/shkeeper/values.yaml).
 
 ---
