@@ -32,6 +32,7 @@ Helm charts and default install configs do **not** ship wallet private keys; you
 SHKeeper currently supports the following cryptocurrencies:
 
 - **Bitcoin (BTC)**  
+- **Bitcoin Lightning (BTC-LIGHTNING)**
 - **Ethereum (ETH)**  
 - **Litecoin (LTC)**  
 - **Dogecoin (DOGE)**  
@@ -39,11 +40,17 @@ SHKeeper currently supports the following cryptocurrencies:
 - **Ripple (XRP)**  
 - **TRON (TRX)**  
 - **Binance Coin (BNB)**  
+- **Solana (SOL)**
 - **Polygon (MATIC)**  
 - **Avalanche (AVAX)**  
+- **Arbitrum (ARBETH)**
+- **Optimism (OPETH)**
+- **TON (TON)**
 - **Firo (FIRO)**  
-- **Tether (USDT)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche  
-- **USD Coin (USDC)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche
+- **Tether (USDT)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, TON  
+- **USD Coin (USDC)** — ERC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism  
+- **PYUSD** — Ethereum, Solana, Arbitrum  
+- **DAI** — Ethereum
 
 > ℹ️ Only these coins are supported for deposits and monitoring. Wallet keys stay on **your** instance (encrypted); SHKeeper does not act as a third-party custodian.
 

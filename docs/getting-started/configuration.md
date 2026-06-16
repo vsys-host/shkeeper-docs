@@ -70,6 +70,8 @@ The chart does **not** use generic keys such as `replicaCount`, `image.repositor
 | `storageClassName` | (empty) | Storage class for PVCs; cluster default if empty |
 | `dev.imagePullSecrets` | (empty) | Optional image pull secrets for private registries |
 
+> `btc_lightning.enabled: true` requires `domain` to be set (chart validation fails otherwise).
+
 ### SHKeeper application
 
 | Key | Default | Description |
@@ -162,7 +164,7 @@ kubectl get svc -n shkeeper shkeeper-external
 
 Open `http://EXTERNAL-IP:5000/` (use your namespace if you changed `namespace`).
 
-**With `domain` set** — the chart creates an Ingress (Traefik, TLS via cert resolver). Open `https://your-domain/`. Requires Traefik and certificate setup (see [Auto SSL](./auto-ssl)).
+**With `domain` set** — the chart creates an Ingress (Traefik, TLS via cert resolver `default`). Open `https://your-domain/`. Requires Traefik and certificate setup (see [Auto SSL](./auto-ssl)).
 
 There is no `service.type` value in `values.yaml`; LoadBalancer is always created as `shkeeper-external`.
 
@@ -172,6 +174,7 @@ There is no `service.type` value in `values.yaml`; LoadBalancer is always create
 
 - SHKeeper runs in **watch-only** payment-processing mode (monitors deposits on your instance). The Helm chart does **not** embed wallet private keys—configure wallets in the UI after install; keys are encrypted in the application database. See [Overview — Watch-only mode](/docs/basics/overview#watch-only-mode--private-keys).
 - Enabling a coin deploys the corresponding *-shkeeper workload and, when `*_fullnode.enabled: true`, a full node with PVCs.
+- `bitcoin-shkeeper` workloads are for on-chain BTC/LTC/DOGE; Lightning is configured separately via `btc_lightning.*`.
 - Use `storageClassName` if your cluster needs a non-default storage class for persistent volumes.
 - Multiple isolated instances: separate Helm releases and/or namespaces (see chart defaults: single replica, one PVC at `/shkeeper.io/instance`).
 - After install, complete [account registration](./account_registration) in the web UI.

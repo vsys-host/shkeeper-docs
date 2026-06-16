@@ -10,6 +10,7 @@ SHKeeper supports a wide range of cryptocurrencies, allowing businesses to accep
 
 SHKeeper currently offers direct payment support for the following assets:
 - **Bitcoin (BTC)**  
+- **Bitcoin Lightning (BTC-LIGHTNING)**
 - **Ethereum (ETH)**  
 - **Litecoin (LTC)**  
 - **Dogecoin (DOGE)**  
@@ -17,11 +18,17 @@ SHKeeper currently offers direct payment support for the following assets:
 - **Ripple (XRP)**  
 - **TRON (TRX)**  
 - **Binance Coin (BNB)**  
+- **Solana (SOL)**
 - **Polygon (MATIC)**  
 - **Avalanche (AVAX)**  
+- **Arbitrum (ARBETH)**
+- **Optimism (OPETH)**
+- **TON (TON)**
 - **Firo (FIRO)**  
-- **USDT** (ERC20, TRC20, BEP‑20, Polygon, Avalanche)  
-- **USDC** (ERC20, TRC20, BEP‑20, Polygon, Avalanche)
+- **USDT** (ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, TON)  
+- **USDC** (ERC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism)
+- **PYUSD** (Ethereum, Solana, Arbitrum)
+- **DAI** (Ethereum)
 ### More Cryptocurrencies Coming
 
 SHKeeper’s ecosystem continues to grow, and additional coins and tokens may be added over time.
