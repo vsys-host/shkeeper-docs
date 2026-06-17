@@ -103,13 +103,13 @@ paths:
         - wallet
     parameters:
       - in: path
-        name: crypto_name
+        name: fiat
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: fiat
+        name: crypto_name
         required: true
         schema:
           type: string
@@ -1039,13 +1039,13 @@ paths:
             --header 'Authorization: Basic YOUR_BASE64_CREDENTIALS'
     parameters:
       - in: path
-        name: crypto_name
+        name: id
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: id
+        name: crypto_name
         required: true
         schema:
           type: string
@@ -1175,13 +1175,13 @@ paths:
             --header 'X-Shkeeper-API-Key: YOUR_API_KEY'
     parameters:
       - in: path
-        name: addr
+        name: crypto
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: crypto
+        name: addr
         required: true
         schema:
           type: string
@@ -1344,13 +1344,13 @@ paths:
             --header 'X-Shkeeper-API-Key: YOUR_API_KEY'
     parameters:
       - in: path
-        name: txid
+        name: external_id
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: external_id
+        name: txid
         required: true
         schema:
           type: string

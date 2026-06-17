@@ -148,7 +148,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "crypto_name",
+          "name": "fiat",
           "required": true,
           "schema": {
             "type": "string",
@@ -157,7 +157,7 @@
         },
         {
           "in": "path",
-          "name": "fiat",
+          "name": "crypto_name",
           "required": true,
           "schema": {
             "type": "string",
@@ -1558,7 +1558,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "crypto_name",
+          "name": "id",
           "required": true,
           "schema": {
             "type": "string",
@@ -1567,7 +1567,7 @@
         },
         {
           "in": "path",
-          "name": "id",
+          "name": "crypto_name",
           "required": true,
           "schema": {
             "type": "string",
@@ -1748,7 +1748,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "addr",
+          "name": "crypto",
           "required": true,
           "schema": {
             "type": "string",
@@ -1757,7 +1757,7 @@
         },
         {
           "in": "path",
-          "name": "crypto",
+          "name": "addr",
           "required": true,
           "schema": {
             "type": "string",
@@ -1987,7 +1987,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "txid",
+          "name": "external_id",
           "required": true,
           "schema": {
             "type": "string",
@@ -1996,7 +1996,7 @@
         },
         {
           "in": "path",
-          "name": "external_id",
+          "name": "txid",
           "required": true,
           "schema": {
             "type": "string",
