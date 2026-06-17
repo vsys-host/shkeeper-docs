@@ -15,7 +15,9 @@ SHKeeper Helm is a **Helm chart** that automates the deployment of SHKeeper and 
 
 ## 📦 What the Helm Chart Installs
 
-After deploying the SHKeeper Helm chart, your cluster runs the **SHKeeper application** and, depending on your `values.yaml`, **cryptocurrency daemons** for the coins you enable (for example Bitcoin, Litecoin, Ethereum). Each component runs as its own workload (Deployment, StatefulSet, and so on).
+After deploying the SHKeeper Helm chart, your cluster runs the **SHKeeper application** and, depending on your `values.yaml`, **cryptocurrency daemons** for the coins you enable (for example Bitcoin, Litecoin, Dogecoin, Ethereum). Each component runs as its own workload (Deployment, StatefulSet, and so on).
+
+For BTC/LTC/DOGE on-chain processing, the chart deploys `bitcoin-shkeeper`-family workloads. Bitcoin Lightning is controlled separately by `btc_lightning.*`.
 
 For a detailed deployment reference, see the [Helm chart](../deployment/helm-chart) page.
 ---
@@ -44,3 +46,5 @@ helm install my-shkeeper vsys-host/shkeeper
 Optional: create a `values.yaml` and install with `helm install my-shkeeper vsys-host/shkeeper -f values.yaml`.
 
 For a full walkthrough (k3s on a VPS, Secret Generator, custom values), see [Installation](./installation) and [Configuration](./configuration).
+
+If you enable Bitcoin Lightning (`btc_lightning.enabled: true`), set `domain` in `values.yaml` (required by chart templates).

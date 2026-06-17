@@ -4,41 +4,45 @@ title: SHKeeper Database Overview
 
 ## How SHKeeper Stores Data
 
-SHKeeper uses **two types of databases**, depending on the component:
+SHKeeper uses different storage layers depending on which workloads are enabled.
 
-### 1. Core SHKeeper (SQLite)
+### 1) Core service (`shkeeper`) database
 
-The main `shkeeper` service uses an embedded **SQLite** database.
+The main `shkeeper` service can run with embedded **SQLite** by default (for example `instance/shkeeper.sqlite` in standalone installs).
 
-- Stored as a local file (e.g. `shkeeper.sqlite`)
-- No external database required
-- Automatically initialized on startup
+In Helm/Kubernetes deployments, additional components are usually enabled, so MariaDB is commonly present in the cluster too.
 
-This is why the system continues to work even if you remove MariaDB.
+### 2) Coin service databases (MariaDB in Helm chart)
 
----
+Many coin-specific services in the Helm deployment use **MariaDB** for operational data and indexing.
 
-### 2. Crypto Services (MariaDB)
+Typical examples:
 
-Some blockchain services use **MariaDB** when enabled:
+- `bitcoin-shkeeper` / `litecoin-shkeeper` / `dogecoin-shkeeper`
+- `ethereum-shkeeper`
+- `bnb-shkeeper`
+- `polygon-shkeeper`
+- `avalanche-shkeeper`
+- `xrp-shkeeper`
+- `tron-shkeeper`
 
-- ethereum-shkeeper  
-- bnb-shkeeper  
-- polygon-shkeeper  
-- avalanche-shkeeper  
-- xrp-shkeeper  
-- tron-shkeeper (partially)
-
-These services require a relational database for handling blockchain data and indexing.
+If these workloads are enabled, MariaDB is required for stable operation.
 
 ---
 
-## Why MariaDB May Not Be Used
+## Can SHKeeper run without MariaDB?
 
-If you disable all supported crypto modules in your config:
+It depends on your deployment profile:
 
-```yaml
-ethereum:
-  enabled: false
-polygon:
-  enabled: false
+- **Standalone core-only setup** (without extra coin workloads): the main service can run with SQLite.
+- **Helm production setup with multiple coins**: MariaDB is expected and should not be removed.
+
+Removing MariaDB while coin workloads are enabled will break those services.
+
+---
+
+## Practical recommendation
+
+- Use SQLite only for lightweight/local scenarios.
+- Use the chart defaults (including MariaDB) for real multi-coin deployments.
+- Treat MariaDB backups as part of your production backup policy when coin services are enabled.
