@@ -204,6 +204,25 @@ paths:
       summary: User settings page including 2FA management
       tags:
         - wallet
+  /admin/test-payment-request:
+    get:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      summary: >-
+        Hidden dev-only tool for manually creating a payment request against the
+        test callback receiver.
+      tags:
+        - wallet
+    post:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      summary: >-
+        Hidden dev-only tool for manually creating a payment request against the
+        test callback receiver.
+      tags:
+        - wallet
   /parts/transactions:
     get:
       responses:
@@ -252,6 +271,19 @@ paths:
       tags:
         - wallet
   /parts/tron-staking-stake:
+    get:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      tags:
+        - wallet
+    post:
+      responses:
+        default:
+          $ref: '#/components/responses/DEFAULT_ERROR'
+      tags:
+        - wallet
+  /parts/tron-staking-undelegate:
     get:
       responses:
         default:
@@ -878,13 +910,13 @@ paths:
               $ref: '#/components/schemas/PaymentCallback'
     parameters:
       - in: path
-        name: crypto_name
+        name: txid
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: txid
+        name: crypto_name
         required: true
         schema:
           type: string
@@ -1175,13 +1207,13 @@ paths:
             --header 'X-Shkeeper-API-Key: YOUR_API_KEY'
     parameters:
       - in: path
-        name: crypto
+        name: addr
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: addr
+        name: crypto
         required: true
         schema:
           type: string
@@ -1344,13 +1376,13 @@ paths:
             --header 'X-Shkeeper-API-Key: YOUR_API_KEY'
     parameters:
       - in: path
-        name: external_id
+        name: txid
         required: true
         schema:
           type: string
           minLength: 1
       - in: path
-        name: txid
+        name: external_id
         required: true
         schema:
           type: string
