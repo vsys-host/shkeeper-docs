@@ -12,7 +12,7 @@ Shkeeper ensures reliable delivery of **webhooks and callbacks** by automaticall
 ## 🔹 How It Works
 
 1. **Detection of Failed Callbacks**  
-   - Every webhook or callback request that does not return a **successful HTTP response (203)** is marked as failed.  
+   - Every webhook or callback request that does not return **HTTP 202** is marked as failed.  
    - Failed callbacks are logged with details including timestamp, payload, and target URL.
 
 2. **Automatic Retry Mechanism**  
@@ -26,7 +26,7 @@ Shkeeper ensures reliable delivery of **webhooks and callbacks** by automaticall
 
 ## 🔒 Best Practices
 
-- Ensure your callback endpoints respond with **HTTP 203 OK** for successful processing.  
+- Ensure your callback endpoints respond with **HTTP 202** for successful processing.  
 - Monitor callback failures and retry metrics to detect systemic issues early.
 
 ---
