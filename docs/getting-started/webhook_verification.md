@@ -35,10 +35,10 @@ HMAC_SHA256(
 )
 ```
 
-Example signed payload:
+Example signed payload (compact JSON, keys sorted — this is how SHKeeper serializes the body):
 
 ```text
-1711111111.{"invoice_id":"123","status":"paid"}
+1711111111.{"addr":"0x…","crypto":"ETH","external_id":"123","paid":true,"status":"PAID"}
 ```
 
 Important:

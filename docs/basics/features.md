@@ -23,6 +23,6 @@ SHKeeper is a powerful self‑hosted cryptocurrency payment processor with a ran
 12. **Independent, Open Source Software** – Fully open‑source and community‑driven software.  
 13. **SegWit Support** – Enhanced transaction flexibility and efficiency.  
 14. **Easily Embeddable Payment Buttons** – Simple integration of payment buttons into any web resource.  
-15. **Full Internal Wallet with Hardware Wallet Integration** – Use SHKeeper as a full crypto wallet with advanced features.
+15. **Encrypted internal wallets** – Keys are created on your instance and encrypted with your password. Importing mnemonic phrases or hardware wallets (Ledger, Trezor) is not supported.
 
 These features make SHKeeper a flexible and powerful choice for businesses looking to integrate direct cryptocurrency payments while keeping full control over funds and infrastructure.

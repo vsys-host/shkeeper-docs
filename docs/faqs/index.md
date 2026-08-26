@@ -29,7 +29,7 @@ Yes, SHKeeper can work with testnet networks for development and testing purpose
 You can deploy SHKeeper on your own server (Docker, Helm, manual install) or integrate directly via API.
 
 ## Does SHKeeper generate a unique wallet for every transaction?
-Yes, each transaction can have a unique deposit address.
+Each **invoice** gets a unique deposit address per cryptocurrency. Creating another invoice (different `external_id` + `callback_url` + `fiat`) allocates a new address. Reusing that triple keeps the same address.
 
 ## What if the WHMCS invoices are not marked as paid?
 Check callback settings and confirm SHKeeper IPN is enabled. The system retries callbacks until acknowledged.

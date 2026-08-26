@@ -26,7 +26,7 @@ SHKeeper currently offers direct payment support for the following assets:
 - **TON (TON)**
 - **Firo (FIRO)**  
 - **USDT** (ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, TON)  
-- **USDC** (ERC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism)
+- **USDC** (ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism)
 - **PYUSD** (Ethereum, Solana, Arbitrum)
 - **DAI** (Ethereum)
 ### More Cryptocurrencies Coming

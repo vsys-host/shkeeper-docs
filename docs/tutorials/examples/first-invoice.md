@@ -1,60 +1,33 @@
 ---
-# id is optional; using filename-based id. Keep frontmatter simple.
 title: First Invoice
 ---
 
-# First Invoice (Invoice Flow)
+# First Invoice
 
-SHKeeper allows you to generate your **first payment** using the **Invoice system**. Each invoice has a **unique wallet address**, automatically generated via SHKeeper API, which ensures accurate tracking of incoming payments. This is ideal for merchants or developers integrating crypto payments into their application.
+Invoices are created with the REST API, not `/api/v1/payments`. There is no “open amount” or `description` field on create.
 
----
+## Create
 
-## 🔹 Steps to Create an Invoice and Receive Payment
+```bash
+curl -s -X POST "https://your-shkeeper/api/v1/BTC/payment_request" \
+  -H "X-Shkeeper-Api-Key: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_id": "12345",
+    "fiat": "USD",
+    "amount": "18.25",
+    "callback_url": "https://your-app/callback"
+  }'
+```
 
-1. **Log in to SHKeeper Dashboard**  
-   - Navigate to the **Payments** section.
+Success response includes `id`, `wallet` (deposit address), `amount` (crypto), `exchange_rate`, `recalculate_after`, `display_name`. Invoice status starts as `UNPAID`.
 
-2. **Create a New Invoice**  
-   - Click **“Create Payment”** or use the **API** to generate an invoice programmatically.  
-   - Select the **coin** (e.g., BTC, ETH, USDT).  
-   - Specify an **amount** (optional) or leave open for customer-defined payments.  
-   - Add a **description** or reference for internal tracking.
+Required JSON fields: `external_id`, `fiat`, `amount`, `callback_url`. Repeating the same `external_id` + `callback_url` + `fiat` updates that invoice (for example after the customer switches coin).
 
-3. **Generate a Unique Payment Address**  
-   - SHKeeper assigns a **unique wallet address** for the invoice automatically.  
-   - This address is tied to the invoice and allows the system to track incoming funds.  
-   - If using API, the endpoint will return the **address** and **memo** (if applicable).  
-   - Example API usage:
+## After payment
 
-   ```bash
-   curl -X POST "https://your-shkeeper-instance/api/v1/payments" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "coin": "BTC",
-       "amount": "0.01",
-       "description": "Invoice #12345"
-     }'
-Response:
+SHKeeper watches the address, then moves the invoice through `PARTIAL` / `PAID` / `OVERPAID`. Your `callback_url` receives a POST; respond with **HTTP 202**.
 
-Send or Receive Funds
+Lookup: `GET /api/v1/invoices/<external_id>` with the same API key.
 
-Provide the generated address (or invoice link) to the payer.
-
-SHKeeper monitors the blockchain and updates the invoice status automatically when funds are received.
-
-Check Payment Status
-
-Once the transaction is confirmed, SHKeeper marks the invoice as Completed.
-
-You can track details such as amount received, confirmations, and payment time via the dashboard or API.
-
-📌 Notes
-Each invoice must have a unique address to ensure correct tracking.
-
-SHKeeper API allows full programmatic control: create, monitor, and manage invoices without using the dashboard.
-
-The invoice flow supports multiple cryptocurrencies; each coin generates a distinct address.
-
-Using this system, merchants can safely accept crypto payments without manual address management.
-
-See SHKeeper API documentation for more examples: GitHub Repository
+Related: [API and IPN](../../user-guide/integrations/api-ipn-usage.md), [First payment](../code-examples/first-payment.md).

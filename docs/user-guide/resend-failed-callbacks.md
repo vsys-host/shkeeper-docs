@@ -1,37 +1,24 @@
 ---
-# id is optional; using filename-based id. Keep frontmatter simple.
 title: Resend Failed Callbacks
 ---
 
 # Resend Failed Callbacks
 
-Shkeeper ensures reliable delivery of **webhooks and callbacks** by automatically retrying failed attempts. This guarantees that your system receives all critical notifications, even in the event of temporary network issues or server downtime.
+Invoice and payout webhooks are accepted only with **HTTP 202**. Any other status (or a timeout) leaves the event unconfirmed.
 
----
+## Invoice callbacks
 
-## 🔹 How It Works
+A scheduler job runs every **60 seconds** (`task_callback`). It:
 
-1. **Detection of Failed Callbacks**  
-   - Every webhook or callback request that does not return **HTTP 202** is marked as failed.  
-   - Failed callbacks are logged with details including timestamp, payload, and target URL.
+1. Updates confirmation counts
+2. POSTs any `Transaction` / `UnconfirmedTransaction` with `callback_confirmed=false` (after `NOTIFICATION_TASK_DELAY` for confirmed txs)
 
-2. **Automatic Retry Mechanism**  
-   - Shkeeper automatically retries failed callbacks based on a **configured retry schedule**.  
-   - Retry intervals may increase progressively (exponential backoff) to prevent overloading your server.
+There is **no** `MAX_RETRIES` cap and **no** exponential backoff on invoice callbacks. They are retried on every run until the endpoint returns 202.
 
-3. **Manual Retry Option**  
-   - Administrators can manually trigger a resend of failed callbacks via the **Shkeeper dashboard** or API.  
-   - This is useful for recovering from extended downtime or configuration issues.
----
+There is no dashboard “resend” button and no public resend API. Operators can trigger a send from the app CLI (`flask` callback `send` command) on the core pod.
 
-## 🔒 Best Practices
+## Payout callbacks
 
-- Ensure your callback endpoints respond with **HTTP 202** for successful processing.  
-- Monitor callback failures and retry metrics to detect systemic issues early.
+Used when `ENABLE_PAYOUT_CALLBACK` is set. Rows in `Notification` retry while `retries < MAX_RETRIES` (env `MAX_RETRIES`, default 7), with delay `1² + 2² + …` seconds. After the cap, retries stop.
 
----
-
-## 🛠 Implementation Notes
-
-- Failed callbacks are stored in Shkeeper until successfully delivered or manually cleared.
-
+Related: [Webhook limits](../deployment/webhook-limits.md), [API and IPN](./integrations/api-ipn-usage.md).

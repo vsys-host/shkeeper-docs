@@ -5,35 +5,41 @@ title: Public Fullnodes
 
 # Public Fullnodes
 
-By default the Helm chart **does not** run your own Bitcoin/Ethereum/Tron nodes. Wallet pods connect to public RPC URLs in `values.yaml`.
+The Helm chart can either deploy an in-cluster node (`*_fullnode.enabled: true`) or point the wallet at an RPC URL.
 
-When `*_fullnode.enabled` is `false`, the chart still passes `url` to the wallet service. Those defaults are VSYS-hosted public endpoints, for example:
+## Bitcoin, Litecoin, Dogecoin
 
-| Chain | Default `url` when the in-cluster fullnode is off |
+When `btc_fullnode.enabled` is **false**, `FULLNODE_URL` is `btc_fullnode.url`. Chart default:
+
+`http://shkeeper:shkeeper@fullnode.bitcoin.shkeeper.io:8332`
+
+When `btc_fullnode.enabled` is **true**, the chart deploys a bitcoind pod and sets `FULLNODE_URL` to `http://shkeeper:shkeeper@bitcoin-fullnode:8332`.
+
+LTC/DOGE follow the same `url` key when the in-cluster fullnode flag is off. Default URLs:
+
+| Chain | Default `url` (fullnode off) |
 |---|---|
 | Bitcoin | `http://shkeeper:shkeeper@fullnode.bitcoin.shkeeper.io:8332` |
 | Litecoin | `http://shkeeper:shkeeper@fullnode.litecoin.shkeeper.io:80` |
 | Dogecoin | `http://shkeeper:shkeeper@fullnode.dogecoin.shkeeper.io` |
-| Ethereum | `http://ethereum:8545` (override with `eth_fullnode.url`) |
-| Tron | `http://java-tron:8090` (`tron_fullnode.url` / `solidity_url`) |
-| XRP | `http://xrp:51234` |
-| Polygon | `http://polygon:51234` |
-| Avalanche | `http://avalanche:9650/ext/bc/C/rpc` |
-| Solana / TON | placeholder URLs — you must set a real RPC |
 
-Bitcoin Lightning uses the same Bitcoin public node for LND (`BITCOIND_RPCHOST`, ZMQ ports `28334` / `28335`).
+Bitcoin Lightning LND uses `BITCOIND_RPCHOST` / ZMQ on `fullnode.bitcoin.shkeeper.io` (ports `28334` / `28335`) unless you override `btc_lightning.lnd` values.
 
-## Enable your own node
+## EVM and other chains
+
+Ethereum, BNB, Polygon, Avalanche, Arbitrum, Optimism, Tron, XRP always pass `*_fullnode.url` into the wallet as `FULLNODE_URL`, whether or not the chart starts a fullnode pod.
+
+Chart **defaults** for those `url` fields are in-cluster DNS names (`http://ethereum:8545`, `http://java-tron:8090`, …). They only work if you also enable the matching `*_fullnode.enabled: true` pod. For public RPC, set `url` explicitly, for example:
 
 ```yaml
 eth:
   enabled: true
 eth_fullnode:
-  enabled: true
+  enabled: false
   mainnet: true
-  url: http://ethereum:8545
+  url: https://fullnode.ethereum.shkeeper.io:8645
 ```
 
-When `enabled: true`, the chart deploys a fullnode pod and PVC. Initial sync can take a long time and needs disk. For a small VPS, keep fullnodes off and use public or third-party RPC instead — see [Low-resource VPS](../deployment/troubleshooting/low-resource-vps.md) and [External nodes](./external-nodes-chainstack.md).
+Solana and TON defaults in `values.yaml` are placeholders; you must set a real RPC.
 
-Per-coin Helm snippets: [Tutorials](/docs/category/tutorials-and-examples).
+Related: [External nodes](./external-nodes-chainstack.md), [Low-resource VPS](../deployment/troubleshooting/low-resource-vps.md), [Quick start public Ethereum](../tutorials/quick-start-public-eth.md).

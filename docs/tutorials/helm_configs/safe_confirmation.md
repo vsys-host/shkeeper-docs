@@ -1,111 +1,15 @@
 ---
-# id is optional; using filename-based id. Keep frontmatter simple.
-title: Safe confirmations
+title: Wallet confirmations
 ---
 
+# Wallet confirmations
 
-# 🔒 SAFE_CONFIRMATIONS in SHKeeper
+Core does **not** read a `SAFE_CONFIRMATIONS` environment variable. Finality for **incoming invoice payments** is `Wallet.confirmations` (default **1**): the tx stays `need_more_confirmations` until `get_confirmations_by_txid(txid) >= confirmations`.
 
-`SAFE_CONFIRMATIONS` is a parameter that defines how many blocks must be confirmed after a transaction is included in the blockchain before it is considered final.  
+Set it in the wallet UI (confirmations field). The same value is saved by `POST /api/v1/<crypto>/autopayout` as `confirationNum` (dashboard session, admin).
 
-It is used to protect against **blockchain reorganizations (reorgs)**, where recently added blocks can be reverted, and transactions in them may temporarily disappear.
+Related: [Network confirmations](../../user-guide/payment-processing/network-confirmations.md).
 
----
+Outgoing payouts use a separate env on the **core** pod: `MIN_CONFIRMATION_BLOCK_FOR_PAYOUT` (default `1`) before status `SUCCESS`.
 
-## 📌 Definition
-
-`SAFE_CONFIRMATIONS` is the number of most recent blocks that are considered unsafe and are not used for transaction finalization.
-
-The system only works with blocks that are deeper than this threshold.
-
----
-
-## ⚙️ How It Works
-
-Definitions:
-
-* current_block — the latest block in the network
-* tx_block — the block containing the transaction
-* SAFE_CONFIRMATIONS = N
-
-Finality condition:
-```
-current_block - tx_block >= SAFE_CONFIRMATIONS
-or:
-safe_block = current_block - SAFE_CONFIRMATIONS
-tx_block <= safe_block
-```
-
----
-
-## 🔹 Example
-```
-current_block = 1000
-SAFE_CONFIRMATIONS = 6
-
-safe_block = 994
-
-* Blocks 995–1000 → unsafe (reorg risk)
-* Blocks <= 994 → safe
-
-Transaction is final if:
-
-tx_block <= 994
-```
----
-
-## 🧠 Why It Matters
-
-Blockchains can experience reorgs:
-
-* recent blocks may be replaced
-* transactions may disappear
-* chain history can change
-
-SAFE_CONFIRMATIONS protects against:
-
-* false-positive payments
-* balance inconsistencies
-* incorrect transaction states
-
----
-
-## 🔄 Difference from Confirmations
-
-Confirmations (UI-level):
-
-confirmations = current_block - tx_block + 1
-
-Safe depth (backend-level):
-
-safe_block = current_block - SAFE_CONFIRMATIONS
-
-Production systems should rely on safe depth.
-
----
-
-## ⚠️ Important Notes
-
-* Higher SAFE_CONFIRMATIONS = more safety, slower finality
-* Lower SAFE_CONFIRMATIONS = faster, but higher risk
-* Value depends on blockchain and risk tolerance
-
----
-
-## 📊 Example Configuration
-BTC
-SAFE_CONFIRMATIONS: 1
----
-
-## 💡 Best Practices
-
-* Use different values per blockchain
-* Never finalize transactions from unsafe zone
-* Store tx_block, current_block, safe_block
-* Re-check transactions on each new block
-
----
-
-## 🧠 TL;DR
-
-SAFE_CONFIRMATIONS = how many latest blocks are ignored to avoid reorg issues
+Coin backends may have their own scanner depth settings via `*.extraEnv` on the wallet deployment; those names are backend-specific and are not defined in `shkeeper.io`.

@@ -17,7 +17,7 @@ Use `crypto_list[].name` as `<crypto>` in paths.
 ## Python: create invoice and verify webhook
 
 ```python
-import json, hmac, hashlib, requests
+import hmac, hashlib, requests
 
 BASE = "https://your-shkeeper"
 KEY = "your-api-key"
@@ -37,7 +37,9 @@ print(r.json()["wallet"], r.json()["amount"])
 
 def verify(timestamp: str, body: bytes, signature: str, secret: str) -> bool:
     digest = hmac.new(
-        secret.encode(), f"{timestamp}.".encode() + body, hashlib.sha256
+        secret.encode("utf-8"),
+        timestamp.encode("ascii") + b"." + body,
+        hashlib.sha256,
     ).hexdigest()
     return hmac.compare_digest(digest, signature)
 ```

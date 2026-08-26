@@ -9,7 +9,7 @@ You can point SHKeeper wallets at any JSON-RPC (or chain-specific) endpoint: Cha
 
 ## EVM chains (ETH, BNB, Polygon, Avalanche, Arbitrum, Optimism)
 
-The wallet image (`ethereum_like_coin`, Helm `unified_evm_image`) uses `FULLNODE_URL`. Helm fills it from `eth_fullnode.url` (and the matching key for other chains) when `*_fullnode.enabled` is `false`.
+The wallet image (`ethereum_like_coin`, Helm `unified_evm_image`) always sets `FULLNODE_URL` from `eth_fullnode.url` (and the matching `*_fullnode.url` for other EVM chains). The `enabled` flag only controls whether the chart also starts an in-cluster node pod. Chart default `url` values are in-cluster names (`http://ethereum:8545`); for a provider or VSYS public RPC you must set `url` yourself.
 
 ```yaml
 eth:

@@ -14,7 +14,7 @@ EVM wallets (`ethereum_like_coin`) scan new blocks on an interval:
 - `CHECK_NEW_BLOCK_EVERY_SECONDS` (default `2`)
 - `FULLNODE_URL` / `FULLNODE_TIMEOUT`
 
-Status is exposed as `GET /api/v1/<crypto>/status` and on `GET /api/v1/crypto` (`Synced` vs lagging). Metrics on the EVM wallet include `ethereum_wallet_last_block` vs `ethereum_fullnode_last_block`.
+Status for a single coin: `GET /api/v1/<crypto>/status` (logged-in session). `GET /api/v1/crypto` (no auth) lists enabled coins that are not `Offline`; if `DISABLE_CRYPTO_WHEN_LAGS` is set, it also omits coins that are not `Synced`. That list is cached for 60 seconds and does **not** include a status field.
 
 Bitcoin-like wallets talk to bitcoind RPC. A local fullnode (`btc_fullnode.enabled: true`) must finish IBD before deposits are reliable. Public RPC skips that wait.
 
@@ -38,4 +38,4 @@ Configure it in the wallet UI or via `POST /api/v1/<crypto>/autopayout` (`confir
 
 `MIN_CONFIRMATION_BLOCK_FOR_PAYOUT` (default `1`) controls when an outgoing payout is marked `SUCCESS` and, if enabled, when the payout webhook fires.
 
-Related Helm preset: [Safe confirmations](../tutorials/helm_configs/safe_confirmation.md).
+Related Helm preset: [Wallet confirmations](../tutorials/helm_configs/safe_confirmation.md).

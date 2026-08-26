@@ -12,7 +12,7 @@ confirmations_on_chain >= wallet.confirmations  →  callback eligible
 
 The invoice callback is still delayed by `NOTIFICATION_TASK_DELAY` (default 60 seconds) after the transaction is created.
 
-Set the threshold in the wallet UI, or through the wallet settings API (`POST /api/v1/<crypto>/autopayout` includes confirmation-related wallet fields used by the dashboard). Helm preset: [Safe confirmations](../../tutorials/helm_configs/safe_confirmation.md).
+Configure it in the wallet UI. The dashboard saves it through `POST /api/v1/<crypto>/autopayout` (logged-in admin session; field `confirationNum`). Helm notes: [Wallet confirmations](../../tutorials/helm_configs/safe_confirmation.md).
 
 Unconfirmed sightings can emit a separate payload if `UNCONFIRMED_TX_NOTIFICATION` is enabled (`status: unconfirmed`). Treat those as **not final**. Do not fulfill orders until `paid` is true and you have verified the HMAC signature.
 

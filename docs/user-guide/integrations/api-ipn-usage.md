@@ -11,8 +11,9 @@ Invoice creation and payment notifications are the integration surface. OpenAPI 
 | Call type | Auth |
 |---|---|
 | `GET /api/v1/crypto` | none |
-| Invoice, quote, addresses, balances | header `X-Shkeeper-Api-Key` |
-| Payout / multipayout / task status | HTTP Basic (dashboard login/password) |
+| Invoice, quote, list addresses, balances | header `X-Shkeeper-Api-Key` |
+| Payout, multipayout, task status | HTTP Basic (dashboard login/password) **or** a logged-in session |
+| Wallet settings (`autopayout`), backup, `GET /<crypto>/status` | logged-in session (not the API key) |
 | Outbound webhooks | HMAC-SHA256 (`X-Shkeeper-Timestamp`, `X-Shkeeper-Signature`) plus `X-Shkeeper-Api-Key` |
 
 The API key is the HMAC secret. Verify the signature on the **raw body**; do not trust the API-key header alone. Guide: [Webhook verification](../../getting-started/webhook_verification.md).
@@ -34,7 +35,7 @@ Content-Type: application/json
 
 Response includes `id`, `wallet` (deposit address), `amount` (crypto), `exchange_rate`, `recalculate_after`.
 
-The invoice identity is the pair **`external_id` + `callback_url`**. Repeating the same pair updates the existing invoice (for example after the customer switches coin).
+The invoice identity is **`external_id` + `callback_url` + `fiat`**. Repeating that triple updates the existing invoice (for example after the customer switches coin).
 
 ## Callback body (confirmed payment)
 

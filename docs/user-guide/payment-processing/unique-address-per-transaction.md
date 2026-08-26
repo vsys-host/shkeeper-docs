@@ -8,7 +8,7 @@ title: Unique Address per Invoice
 
 ## Same order, different coin
 
-Identity is **`external_id` + `callback_url`**. If the customer switches from ETH to USDT, call `payment_request` again with the same pair and the new crypto. SHKeeper updates the invoice, keeps previous addresses, and credits a payment that lands on an older address for that invoice.
+Identity is **`external_id` + `callback_url` + `fiat`**. If the customer switches from ETH to USDT, call `payment_request` again with the same triple and the new crypto. SHKeeper updates the invoice, keeps previous addresses, and credits a payment that lands on an older address for that invoice.
 
 Lightning (`BTC-LIGHTNING`) can also attach an on-chain BTC address when `LIGHTNING_GENERATE_ONCHAIN_ADDRESS` is enabled (BTC wallet must be on).
 
@@ -18,7 +18,7 @@ Creating invoices for every coin “in advance” allocates unused addresses. Cr
 
 ## Static address pattern
 
-There is no separate “static address” API. To keep one address per customer, reuse the same invoice (`external_id` + `callback_url`) and optionally set a high target amount so the invoice stays below `PAID`. Rate refresh still follows wallet `recalc` (hours).
+There is no separate “static address” API. To keep one address per customer, reuse the same invoice (`external_id` + `callback_url` + `fiat`) and optionally set a high target amount so the invoice stays below `PAID`. Rate refresh still follows wallet `recalc` (hours).
 
 ## No built-in address cap
 

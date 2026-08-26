@@ -8,7 +8,7 @@ A new chain needs three pieces: core `Crypto` class, a wallet daemon the core ca
 
 ## Core
 
-1. Subclass `Crypto` (or an existing family: `BitcoinLikeCrypto`, `Ethereum`, `ShkeeperWalletCrypto`).
+1. Subclass `Crypto` (or an existing family: `BitcoinLikeCrypto`, `Ethereum`).
 2. Implement `mkaddr`, `balance`, `getstatus`, `getaddrbytx` / `get_confirmations_by_txid`, `mkpayout`.
 3. Drop the module in `shkeeper/modules/cryptos/`. Class name controls the env flag: `FOO_WALLET=enabled`.
 4. Add the class name to `default_off` unless it should start enabled (only `btc`, `ltc`, `doge` are `default_on`).

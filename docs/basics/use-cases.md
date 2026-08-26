@@ -15,11 +15,11 @@ Official modules exist for [WHMCS](../user-guide/integrations/whmcs.md), [WooCom
 
 ## Recurring or static deposits
 
-If a customer must keep the same address (exchange-style deposits), reuse the same `external_id` + `callback_url` pair. SHKeeper updates the existing invoice instead of creating a second one. See [Unique address per invoice](../user-guide/payment-processing/unique-address-per-transaction.md).
+If a customer must keep the same address (exchange-style deposits), reuse the same `external_id` + `callback_url` + `fiat`. SHKeeper updates the existing invoice instead of creating a second one. See [Unique address per invoice](../user-guide/payment-processing/unique-address-per-transaction.md).
 
 ## Payouts and cold storage
 
-Use HTTP Basic Auth on payout endpoints, or enable wallet autopayout (`scheduled` / `limit`) to a destination address. Multipayout is available for TRON, Ethereum, BNB, and XRP — not for BTC, LTC, DOGE, or Monero. See [Cold wallets](../user-guide/wallet-setup/cold-wallets.md).
+Use HTTP Basic Auth on payout endpoints, or enable wallet autopayout (`scheduled` / `limit`) to a destination address. Multipayout is available for TRON, Ethereum, BNB, and XRP. See [Cold wallets](../user-guide/wallet-setup/cold-wallets.md).
 
 ## Self-hosted vs public nodes
 

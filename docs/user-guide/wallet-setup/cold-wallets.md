@@ -11,8 +11,8 @@ Autopayout moves coin from the hot wallet to a destination you control (`Wallet.
 | Value | Behavior |
 |---|---|
 | `manual` | No automatic send. Use the dashboard or payout API. |
-| `scheduled` | Periodic attempts (`last_payout_attempt`). |
-| `limit` | Payout when balance meets `pcond`. |
+| `scheduled` | Run when `last_payout_attempt + pcond minutes` is in the past (and balance is not zero). |
+| `limit` | Run when `balance >= pcond`. |
 
 `Wallet.payout` must be true. `pfee` is the fee parameter passed to `mkpayout` (sat/vByte for BTC; ignored on many EVM coins where fee is estimated).
 

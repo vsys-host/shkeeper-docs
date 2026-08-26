@@ -39,7 +39,8 @@ Shkeeper securely encrypts all wallet data stored in its database using that reg
 
 ---
 
-## 🛠 Implementation Notes
+## Implementation Notes
 
-- Shkeeper uses **AES-256 encryption** for wallet data.  
-- Encryption and decryption occur **on the server-side memory**
+- Wallet material is encrypted with **Fernet** (AES-128-CBC plus HMAC-SHA256). The Fernet key is derived from your password with **PBKDF2-HMAC-SHA256** (500 000 iterations).
+- The password is stored only as a bcrypt hash, never in plain text.
+- Encryption and decryption happen in process memory after you unlock the wallet.

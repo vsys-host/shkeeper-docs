@@ -6,7 +6,7 @@ title: Payout Automation
 
 ## Autopayout (wallet)
 
-Configure destination and policy in the dashboard or `POST /api/v1/<crypto>/autopayout`. Policies: `manual`, `scheduled`, `limit`. Optional reserve: `prespolicy` `amount` or `percent`. See [Cold wallets](../user-guide/wallet-setup/cold-wallets.md).
+Configure destination and policy in the dashboard. The HTTP endpoint `POST /api/v1/<crypto>/autopayout` uses a **logged-in admin session** (it does not accept the API key or HTTP Basic). Policies: `manual`, `scheduled` (`pcond` is the interval in **minutes**), `limit` (`pcond` is the balance threshold). Optional reserve: `prespolicy` `amount` or `percent`. See [Cold wallets](../user-guide/wallet-setup/cold-wallets.md).
 
 ## API payout (Basic auth)
 

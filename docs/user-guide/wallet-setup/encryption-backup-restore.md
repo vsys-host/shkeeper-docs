@@ -16,7 +16,7 @@ Runtime status: pending / fail / success. Persistent status: pending / disabled 
 
 ## Backup
 
-`GET /api/v1/<crypto>/backup` (authenticated) asks the coin backend for a wallet backup. The core uses a longer HTTP timeout for this call (backup can be slow). Store the file offline.
+`GET /api/v1/<crypto>/backup` requires a **logged-in admin session** (not the API key). It asks the coin backend for a wallet dump. Store the file offline.
 
 EVM backends (`ethereum_like_coin`) keep encrypted keys in MariaDB (`Wallets.priv_key`). Back up that database as well as the core SQLite file (`instance/shkeeper.sqlite` unless you switched DSN).
 

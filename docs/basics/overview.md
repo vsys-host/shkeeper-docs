@@ -20,7 +20,7 @@ It tracks transactions for supported cryptocurrencies, generates invoices with u
 |------|---------------------|
 | **Watch-only (processor)** | Observes the chain and verifies deposits; no external custodian |
 | **Non-custodial** | Self-hosted; you control infrastructure, encryption password, and funds |
-| **Private keys** | Created at registration, **encrypted** in your database (AES-256), **never stored in plain text** |
+| **Private keys** | Created at registration, **encrypted** in your database (Fernet / PBKDF2), **never stored in plain text** |
 | **Not supported** | Importing external Bitcoin-style watch-only wallets (xpub / view-key only) — see [FAQ](/docs/faqs#lite-wallets-supported) |
 
 Helm charts and default install configs do **not** ship wallet private keys; you complete [wallet setup](/docs/getting-started/wallet_setup) in the UI after deployment. For encryption details, see [Encrypt wallet data](/docs/security/encrypt-wallet-dat).
@@ -48,7 +48,7 @@ SHKeeper currently supports the following cryptocurrencies:
 - **TON (TON)**
 - **Firo (FIRO)**  
 - **Tether (USDT)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, TON  
-- **USD Coin (USDC)** — ERC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism  
+- **USD Coin (USDC)** — ERC20, TRC20, BEP‑20, Polygon, Avalanche, Solana, Arbitrum, Optimism  
 - **PYUSD** — Ethereum, Solana, Arbitrum  
 - **DAI** — Ethereum
 

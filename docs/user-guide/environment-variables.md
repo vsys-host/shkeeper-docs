@@ -12,20 +12,20 @@ SHKeeper core (`shkeeper.io`) reads these variables at startup. In Helm, set ext
 | Variable | Default | Meaning |
 |---|---|---|
 | `SECRET_KEY` | random at start | Flask session key. Regenerating it logs everyone out. |
-| `FORCE_WALLET_ENCRYPTION` | unset / false | Require wallet encryption at setup. |
-| `UNCONFIRMED_TX_NOTIFICATION` | unset / false | Send a callback when an unconfirmed tx is seen (`status: unconfirmed`). |
+| `FORCE_WALLET_ENCRYPTION` | unset | Any **non-empty** value is treated as true (`bool(os.environ.get(...))`). |
+| `UNCONFIRMED_TX_NOTIFICATION` | unset | Any non-empty value enables unconfirmed-tx callbacks (`status: unconfirmed`). |
 | `REQUESTS_TIMEOUT` | `10` | Timeout (seconds) for outbound HTTP to coin backends. |
 | `MAX_RETRIES` | `7` | Max retries for **payout** callback notifications (`REQUESTS_NOTIFICATION_RETRIES`). |
 | `REQUESTS_NOTIFICATION_TIMEOUT` | `30` | Timeout (seconds) when posting invoice/payout webhooks. |
-| `ENABLE_PAYOUT_CALLBACK` | unset / false | Send payout success webhooks. Helm maps this from `shkeeper.enable_payout_callback`. |
+| `ENABLE_PAYOUT_CALLBACK` | unset | Any non-empty value enables payout success webhooks. Helm sets this from `shkeeper.enable_payout_callback`. |
 | `MIN_CONFIRMATION_BLOCK_FOR_PAYOUT` | `1` | Confirmations required before a payout is marked `SUCCESS`. |
 | `NOTIFICATION_TASK_DELAY` | `60` | Seconds to wait after a confirmed tx before sending the invoice callback. |
-| `DISABLE_CRYPTO_WHEN_LAGS` | unset / false | Reject `payment_request` if the coin backend is not `Synced`. |
+| `DISABLE_CRYPTO_WHEN_LAGS` | unset | Any non-empty value rejects `payment_request` / `quote` if the backend is not `Synced`. |
 | `EXTRA_CURRENCIES` | empty | Extra ISO 4217 codes besides `USD` and `EUR` (example: `TRY,CAD`). |
-| `DEV_MODE` | `False` | Development mode (`SECRET_KEY=dev`). Do not use in production. |
+| `DEV_MODE` | unset | Any non-empty value enables development mode (`SECRET_KEY=dev`). Do not use in production. |
 | `DEV_MODE_ENC_PW` | unset | Optional encryption password used only in `DEV_MODE`. |
-| `TRON_MULTISERVER_GUI` | unset / false | Show Tron multi-server UI. |
-| `TRON_STAKING_GUI` | unset / false | Show Tron staking UI. |
+| `TRON_MULTISERVER_GUI` | unset | Any non-empty value shows the Tron multi-server UI. |
+| `TRON_STAKING_GUI` | unset | Any non-empty value shows the Tron staking UI. |
 | `METRICS_USERNAME` / `METRICS_PASSWORD` | `shkeeper` / `shkeeper` | Basic auth for metrics. |
 
 Wallet enable flags follow the class name in uppercase plus `_WALLET`. Examples: `ETH_WALLET=enabled`, `USDT_WALLET=enabled`, `BTC-LIGHTNING` uses `BITCOINLIGHTNING_WALLET` via the class name `BitcoinLightning`. BTC, LTC, and DOGE are on by default; other coins stay off until the flag is `enabled`.
