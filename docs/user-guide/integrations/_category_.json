@@ -1,0 +1,8 @@
+{
+  "label": "Integrations",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "REST API, webhooks, and ready-made e-commerce modules."
+  }
+}

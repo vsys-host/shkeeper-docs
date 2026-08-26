@@ -43,3 +43,5 @@ Once the user sends funds to the provided address:
 - Validate invoice status before providing goods or services
 
 Invoices allow SHKeeper to provide a reliable and traceable payment flow across multiple blockchains.
+
+See also: [API and IPN](./integrations/api-ipn-usage.md), [Unique address per invoice](./payment-processing/unique-address-per-transaction.md), [Underpayment and overpayment](./payment-processing/underpayment-gas-confirmation.md), [Network confirmations](./payment-processing/network-confirmations.md).

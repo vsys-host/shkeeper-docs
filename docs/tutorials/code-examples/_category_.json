@@ -1,0 +1,8 @@
+{
+  "label": "Code Examples",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "API clients and testnet examples."
+  }
+}

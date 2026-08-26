@@ -37,11 +37,11 @@ Check callback settings and confirm SHKeeper IPN is enabled. The system retries 
 ## Does SHKeeper support IPN callbacks for Telegram Bot?
 Yes, you can use webhook/IPN callbacks to integrate with Telegram bots or any external service.
 
-## Is there a custom admin dashboard for managing merchants?
-Yes, SHKeeper provides a web dashboard to manage merchants, wallets, and transactions.
+## Is there a custom admin dashboard?
+Yes. SHKeeper provides a web dashboard to manage wallets, invoices, and transactions.
 
 ## Can I set different rates/fees?
-Yes, you can configure custom fees per merchant or globally.
+Yes. Each wallet has its own rate source, percent/fixed fee, and fee policy. Rates are per cryptocurrency and fiat pair.
 
 ## Can I run SHKeeper without root?
 Yes, SHKeeper can be run as a regular user via Docker or system services, no root required.
