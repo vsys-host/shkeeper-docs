@@ -65,7 +65,14 @@ eth_fullnode:
   mainnet: true
 ```
 
-**Images** — chain-specific images are top-level keys, for example `unifiend_btc_image`, `ethereum_shkeeper.image`, `tron_shkeeper.image`, not `image.repository` under a generic `image` block.
+**Images** — chain-specific images are top-level keys, for example `unifiend_btc_image`, `ethereum_like_shkeeper.image`, `tron_shkeeper.image`, not `image.repository` under a generic `image` block.
+
+For EVM-like networks (ETH, BNB, Polygon, Avalanche, Arbitrum, Optimism), use a shared image key:
+
+```yaml
+ethereum_like_shkeeper:
+  image: vsyshost/ethereum_like_coin:1.0.1
+```
 
 ---
 
